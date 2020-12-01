@@ -10,7 +10,7 @@ methods to store data provided by the _Interactive Brokers TWS_ into the databas
 It replaces core functions of  **ib-gateway** from the [IB-Extensions-Gem](https://github.com/ib-ruby/ib-extensions)
 
 
-## Store a contract in the database, query the database and ask the TWS for hiostorical data
+## Store a contract in the database, query and ask the TWS for historical data
 
 ``` ruby
 > ge =  IB::Stock.new symbol: 'GE'
