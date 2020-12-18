@@ -1,0 +1,92 @@
+#!/usr/bin/env ruby
+### loads the active-orient environment 
+### and starts an interactive shell
+###
+### Parameter: t)ws | g)ateway (or number of port ) Default: Gateway ,
+###							client_id , Default 2000
+###
+### Define Parameter in  file console.yml
+###
+require 'bundler/setup'
+require 'yaml'
+require 'ib-orientdb'
+require 'ib/orient-gateway'
+require 'logger'
+
+
+
+
+# read items from console.yml 
+read_yml = -> (key) do
+		YAML::load_file( File.expand_path('../../connect.yml',__FILE__))[key]
+	end
+project_root = File.expand_path('../..', __FILE__)
+model_dir =  project_root + '/lib/models'
+
+  puts 
+  puts ">> IB-OrientDB Interactive Console  <<"
+  puts '-'* 45
+	puts
+	puts " ... preparing environment"
+	include LogDev
+  include IB
+  require 'irb'
+
+	environment =  ARGV[0] || 'Development'
+	environment =  case environment
+								 when /^[pP]/
+									 :production
+								 when /^[dD]/
+									 :development
+								 when /^[tT]/
+									 :test
+								 end
+	tws =  read_yml[:tws][environment]
+	orientdb =  read_yml[:orientdb][environment]
+
+  ARGV.clear
+  logger = default_logger #  Logger.new  STDOUT
+	
+  ## The Block takes instructions which are executed  after initializing all instance-variables
+  ## and prior to the connection-process
+  ## Here we just subscribe to some events  
+
+	module TG; end
+	ActiveOrient::Model.keep_models_without_file =  false
+	ActiveOrient::Model.model_dir = model_dir
+	IB::Setup.connect( tws: tws, orientdb: orientdb, kind: :gateway) do |c|
+		module HC; end
+		ActiveOrient::Init.define_namespace { HC  }
+
+		ActiveOrient::OrientDB.new# model_dir: model_dir
+
+		puts '-'* 83 
+		print '-'* 35
+		print " TWS Connect "
+		puts '-'* 35 
+		c.subscribe( :ContractData, :BondContractData) { |msg| logger.info { msg.contract.to_human } }
+		c.subscribe( :Alert, :ContractDataEnd, :ManagedAccounts, :OrderStatus ) {| m| logger.info { m.to_human } }
+		c.subscribe( :PortfolioValue, :AccountValue, :OrderStatus, :OpenOrderEnd, :ExecutionData ) {| m| logger.info { m.to_human }}
+
+		c.logger.level = Logger::WARN # INFO 
+	end
+
+	C =  IB::Connection.current
+	G =  IB::OrientGateway.current
+	puts ActiveOrient::show_classes
+#	G.logger.level =  3
+#	G.get_account_data
+
+
+  puts ">> IB-OrientDB Interactive Console is ready -- using #{environment.to_s.upcase} environment <<" 
+  puts '-'* 45
+  puts 
+  puts "Namespace is IB ! "
+  puts 
+  puts  "----> C    points to the Connection-Instance"
+  puts  "----> G    points to the Gateway-Instance"
+  puts
+  puts  "some basic Messages are subscribed and accordingly displayed"
+  puts
+  puts '-'* 45
+  IRB.start(__FILE__)

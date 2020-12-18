@@ -6,23 +6,26 @@ def	read_yml key
 		YAML::load_file( File.expand_path('../../connect.yml',__FILE__))[key]
 	end
 def connect 
+	project_root = File.expand_path('../..', __FILE__)
+	model_dir =  project_root + '/lib/models'
+	puts "model_dir: #{model_dir}"
+
 	orientdb =  read_yml(:orientdb)[:test] #.merge( logger: mock_logger )
 	tws =  read_yml(:tws)[:test].merge( logger: mock_logger )
-	Setup.connect tws: tws, orientdb: orientdb
+	ActiveOrient::Model.model_dir = model_dir
+	ActiveOrient::Model.keep_models_without_file =  false
+
+	IB::Setup.connect tws: tws, orientdb: orientdb
+	ActiveOrient::Init.define_namespace { HC  }
+	ActiveOrient::OrientDB.new
+	
 end
 
 =begin
-Deletes the active database and unallocates ORD and DB
+Deletes entries of the active database
 =end
-def destroy_database
-
-  connect
-  Object.send :const_set, :ORD,     ActiveOrient::OrientDB.new(  preallocate:  false)
-  ORD.delete_database database: read_yml(:orientdb)[:test][:database]
-  ActiveOrient::Model.allocated_classes = {}
-  Object.send :remove_const, :ORD 
-  ActiveOrient::Model.allocated_classes = {}
-	connect
+def clear_database
+	
 
 end
 

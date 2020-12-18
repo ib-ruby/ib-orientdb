@@ -1,13 +1,12 @@
 require 'bundler/setup'
-require 'yaml'
-
-require 'logger'
 
 require 'active-orient'
+require 'orientdb_time_graph'
+
 DB = true
 require 'ib/base_properties'
 require 'ib-api'
-require 'db_init'
-require 'connect'
+require_relative 'ib/setup-orientdb'   
+require_relative 'support'
 
 

@@ -5,6 +5,7 @@ require 'rspec'
 require 'rspec/its'
 require 'rspec/collection_matchers'
 require 'ib-orientdb'
+require 'ib/orient-gateway'
 
 require 'pp'
 require 'yaml'
@@ -26,7 +27,10 @@ OPTS[:tws] = read_yml[:tws][:test]
 ACCOUNT =  OPTS[:tws][:account]   # shortcut for active account (orders portfolio_values ect.)
 OPTS[:orient_db] = read_yml[:orientdb][:test]
 	
+#module IB; end
+#module HC; end
 RSpec.configure do |config|
+	config.color = true
 
   puts "Running specs with OPTS:"
   pp OPTS
