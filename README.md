@@ -1,5 +1,12 @@
 # IB-OrientDB
 
+---
+__Documentation: [https://ib-ruby.github.io/ib-doc/](https://ib-ruby.github.io/ib-doc/)__  
+
+__Questions, Contributions, Remarks: [Discussions are opened in ib-api](https://github.com/ib-ruby/ib-api/discussions)__
+
+---
+
 **[OrientDB](https://orientdb.org/)**  is a **N**ot **O**nly **SQL** Database owned and maintained by SAP.
 
 It aims to be "the first Multi-Model Open Source NOSQL DBMS that brings together the power of graphs and the flexibility of documents into one scalable high-performance operational database."( [source](https://orientdb.org/docs/3.0.x/) )
