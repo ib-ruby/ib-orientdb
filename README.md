@@ -52,7 +52,7 @@ and assigned to the [TimeGrid](https://ib-ruby.github.io/ib-doc/orientdb_setup.h
 Then, the progress of the account is displayed through
 ```ruby
  TG:Jahr[2020].monat(10).tag(10..31)   #=>   Reference to the TimeGrid
-              .portfolios              #=>   Connection to HC::Porfolio
+              .portfolios              #=>   Connection to HC::Portfolio
 `             .values                  #=>   Hash with Account-Informations 
               .orient_flatten          #=>   flattenn the Array while protecting IB::Model-structures
               .map{|y|  y[:NetLiquidation][:ALL][:EUR] }   # select the data-item
