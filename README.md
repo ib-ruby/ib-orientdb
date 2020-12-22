@@ -58,5 +58,5 @@ Then, the progress of the account is displayed through
               .map{|y|  y[:NetLiquidation][:ALL][:EUR] }   # select the data-item
  =>  [69603.6, 69489.85, 70484.55, 70510.63, 70535.23, 71731.03, 69961.97, 69401.94, 71457.3, 71734.38, 71491.07, 67803.07, 68689.82]
 ```
-The same approach works to monitor progress and properties of positions  and collections of positons, ie. trading-strategies.
+The same approach works to monitor progress and properties of positions  and collections of positions, ie. trading-strategies.
 
