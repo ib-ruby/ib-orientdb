@@ -47,7 +47,7 @@ It replaces core functions of  **ib-gateway** from the [IB-Extensions-Gem](https
 ### Monitor the Account
 
 After initialising the database, a class `HC::Portfolio` is present. It is used to manage Portfolio- and Account-Data. 
-The data from the TWS are imported with `HC::Portfolio.bake` [Details](https://ib-ruby.github.io/ib-doc/orientdb_working_with_data.html) 
+Data from the TWS are imported with `HC::Portfolio.bake` ([Details](https://ib-ruby.github.io/ib-doc/orientdb_working_with_data.html))
 and assigned to the [TimeGrid](https://ib-ruby.github.io/ib-doc/orientdb_setup.html#setup-the-timegrid). 
 Then, the progress of the account is displayed through
 ```ruby
