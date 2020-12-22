@@ -26,8 +26,6 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
 
-#	spec.add_dependency "ib-api"
-#	spec.add_dependency "ib-extensions"
 	spec.add_development_dependency "bundler", "~> 2.0"
   spec.add_development_dependency "rspec", "~> 3.0"
   spec.add_development_dependency 'rspec-collection_matchers'
@@ -35,4 +33,10 @@ Gem::Specification.new do |spec|
 
   spec.add_development_dependency "guard"
   spec.add_development_dependency "guard-rspec"
+
+
+	spec.add_dependency "ib-api", "~>972.1"
+	spec.add_dependency "ib-extensions"
+	spec.add_dependency "active-orient", "~> 0.8"
+  spec.add_dependency 'orientdb-time-graph'
 end

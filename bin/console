@@ -9,15 +9,9 @@
 ###
 require 'bundler/setup'
 require 'yaml'
-
+require 'ib-orientdb'
 require 'logger'
 
-require 'active-orient'
-DB = true
-require 'ib/base_properties'
-require 'ib-api'
-require 'db_init'
-require 'connect'
 
 class Array
   # enables calling members of an array. which are hashes  by it name
@@ -69,46 +63,29 @@ read_yml = -> (key) do
   ARGV.clear
   logger = default_logger #  Logger.new  STDOUT
 	
+  ## The Block takes instructions which are executed  after initializing all instance-variables
+  ## and prior to the connection-process
+  ## Here we just subscribe to some events  
+
+	module TG; end
+	ActiveOrient::Model.keep_models_without_file =  false
 
 	Setup.connect( tws: tws, orientdb: orientdb) do |c|
+  puts '-'* 83 
+  print '-'* 35
+  print " TWS Connect "
+  puts '-'* 35 
     c.subscribe( :ContractData, :BondContractData) { |msg| logger.info { msg.contract.to_human } }
     c.subscribe( :Alert, :ContractDataEnd, :ManagedAccounts, :OrderStatus ) {| m| logger.info { m.to_human } }
     c.subscribe( :PortfolioValue, :AccountValue, :OrderStatus, :OpenOrderEnd, :ExecutionData ) {| m| logger.info { m.to_human }}
 
+		c.logger.level = Logger::INFO 
 	end
 
-	C =  Connection.current
-puts ActiveOrient::show_classes
+	C =  IB::Connection.current
+	puts ActiveOrient::show_classes
 
 
-  ## The Block takes instructions which are executed  after initializing all instance-variables
-  ## and prior to the connection-process
-  ## Here we just subscribe to some events  
-#  C =  Connection.new  client_id: client_id, port: port  do |c|  # future use__ , optional_capacities: "+PACEAPI"  do |c|
-#
-#    c.subscribe( :ContractData, :BondContractData) { |msg| logger.info { msg.contract.to_human } }
-#    c.subscribe( :Alert, :ContractDataEnd, :ManagedAccounts, :OrderStatus ) {| m| logger.info { m.to_human } }
-#    c.subscribe( :PortfolioValue, :AccountValue, :OrderStatus, :OpenOrderEnd, :ExecutionData ) {| m| logger.info { m.to_human }}
-##    c.subscribe :ManagedAccounts do  |msg|
-##        puts "------------------------------- Managed Accounts ----------------------------------"
-##				puts "Detected Accounts: #{msg.accounts.account.join(' -- ')} " 
-##				puts
-##    end
-#
-#    c.subscribe( :OpenOrder){ |msg|  "Open Order detected and stored: C.received[:OpenOrders] " }
-#		c.logger.level = Logger::INFO 
-#	end 
-#  unless  C.received[:OpenOrder].blank?
-#        puts "------------------------------- OpenOrders ----------------------------------"
-#    puts C.received[:OpenOrder].to_human.join "\n"
-#  end
-#  puts  "Connection established on Port  #{port}, client_id #{client_id} used"
-#  puts
-#  puts  "----> C    points to the connection-instance"
-#  puts
-#  puts  "some basic Messages are subscribed and accordingly displayed"
-#  puts '-'* 45
-#
   puts ">> IB-OrientDB Interactive Console is ready -- using #{environment.to_s.upcase} environment <<" 
   puts '-'* 45
   puts 
