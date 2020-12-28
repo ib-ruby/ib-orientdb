@@ -1,7 +1,7 @@
 # IB-OrientDB
 
 ---
-__Documentation: [https://ib-ruby.github.io/ib-doc/](https://ib-ruby.github.io/ib-doc/)__  
+__Documentation: [https://ib-ruby.github.io/ib-doc/](https://ib-ruby.github.io/ib-doc/orientdb_introduction.html)__  
 
 __Questions, Contributions, Remarks: [Discussions are opened in ib-api](https://github.com/ib-ruby/ib-api/discussions)__
 
@@ -15,7 +15,20 @@ It aims to be "the first Multi-Model Open Source NOSQL DBMS that brings together
 methods to store data provided by the _Interactive Brokers TWS_ into the database and to retrieve  them as well. 
 
 It replaces core functions of  **ib-gateway** from the [IB-Extensions-Gem](https://github.com/ib-ruby/ib-extensions)
+## INSTALLATION:
 
+```
+    $ git clone https://github.com/ib-ruby/ib-orientdb
+    $ cd ib-orientdb
+    $ bundle install; bundle update
+```
+    or
+    specify in Gemfile:
+```
+    gem 'ib-api'
+    gem 'ib-extensions'
+    gem 'ib-orientdb'
+```
 
 ## Store a contract in the database, query and ask the TWS for historical data
 
@@ -29,13 +42,21 @@ It replaces core functions of  **ib-gateway** from the [IB-Extensions-Gem](https
 <Bar: 2020-11-25 wap 10.479 OHLC 10.55 10.6 10.34 10.51 trades 120367 vol 1063415>
 <Bar: 2020-11-27 wap 10.403 OHLC 10.5 10.65 10.31 10.41 trades 73036 vol 529140>
 <Bar: 2020-11-30 wap 10.215 OHLC 10.37 10.43 9.96 10.24 trades 134117 vol 1173670>
-
-
 ```
 
+### Monitor the Account
 
-
-
-**Work in Progress**
-
+After initialising the database, a class `HC::Portfolio` is present. It is used to manage Portfolio- and Account-Data. 
+Data from the TWS are imported with `HC::Portfolio.bake` ([Details](https://ib-ruby.github.io/ib-doc/orientdb_working_with_data.html))
+and assigned to the [TimeGrid](https://ib-ruby.github.io/ib-doc/orientdb_setup.html#setup-the-timegrid). 
+Then, the progress of the account is displayed through
+```ruby
+ TG:Jahr[2020].monat(10).tag(10..31)   #=>   Reference to the TimeGrid
+              .portfolios.first        #=>   Connection to HC::Portfolio
+`             .values                  #=>   Hash with Account-Informations 
+              .orient_flatten          #=>   flattenn the Array while protecting IB::Model-structures
+              .map{|y|  y[:NetLiquidation][:ALL][:EUR] }   # select the data-item
+ =>  [69603.6, 69489.85, 70484.55, 70510.63, 70535.23, 71731.03, 69961.97, 69401.94, 71457.3, 71734.38, 71491.07, 67803.07, 68689.82]
+```
+The same approach works to monitor progress and properties of positions  and collections of positions, ie. trading-strategies.
 
