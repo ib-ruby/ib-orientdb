@@ -1,0 +1,41 @@
+---
+# host and port of a runnung tws- or gateway instance
+:tws:
+  :production:
+   :host: localhost
+   :port: 4002  # 7496  #  4001/7496
+#  :client_id: 1433
+  :development:
+   :host: localhost
+   :port: 7496  #  4001/7496
+#  :client_id: 1434
+  :test:
+   :host: localhost
+   :port: 4002  # 7496  #  4001/7496
+#   :client_id: 1435
+   :account: DU167348     # Account to perform orders in test suite
+# only needed if no account alias is specified in TWS
+  :user: 
+   DF167347: DemoAdvisor
+   DU167348: FirstUser
+# do not instantiate access to the following accounts    
+ #:exclude:
+ # DU167349: SecondUser
+  :prices: delayed  #  or realtime
+# host and credentials for the orientdb database
+:orientdb:
+  :production:
+   :server: 172.28.50.25
+   :user:  hctw
+   :password: hc 
+   :database: hc
+  :test:
+   :server: 10.222.148.109
+   :user: hctw
+   :password: hc
+   :database: test
+  :development:
+   :server: 10.222.148.109
+   :user: hctw
+   :password: hc
+   :database: demo

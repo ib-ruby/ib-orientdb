@@ -69,7 +69,7 @@ module Setup
 			IB::Account.create_class  :advisor, :user
 			IB::Advisor.create_class  :demo_advisor
 			IB::User.create_class     :demo_user
-			V.create_class            :portfolio_value, :account_value,  :underlying, :contract_detail, :bar
+			V.create_class            :portfolio_value, :account_value,  :underlying, :contract_detail, :bar, :combo_leg
 			IB::Contract.create_class :option, :future, :stock, :forex, :index, :bag
 			IB::Bag.create_class      :spread
 						
