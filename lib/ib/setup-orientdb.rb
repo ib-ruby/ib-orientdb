@@ -19,7 +19,10 @@ module Setup
 	#
 	# The optional block is evaluated in the context of the initialized, but not connected IB::Connection.
 	#
+	# Important: Modules IB, TG and HC have to be initialized before calling connect!
 	#
+	# A custom directory containing model-files to be included can be provided by setting
+	#  -->  ActiveOrient::Model.model_dir 
 	#
 	def self.connect tws:, orientdb:, kind: :connection
 		project_root = File.expand_path('../..', __FILE__)
@@ -30,12 +33,15 @@ module Setup
 
   	TG.connect { project_root + '/models'}
 
-		## There are two locations of modelfiles
+		## There are three locations of modelfiles
 		## 1. ib-api-model files
 		## 2. ib.orientdb-model files
+		## 3. lib/modes  (locally)
 		model_dir =[ (Pathname.new( `gem which ib-api`.to_s[0..-2]).dirname + "models/").to_s ,
 																	 project_root + '/models']
 		ActiveOrient::Init.define_namespace { IB  }
+		ActiveOrient::OrientDB.new model_dir: model_dir
+		ActiveOrient::Init.define_namespace { HC  }
 		ActiveOrient::OrientDB.new model_dir: model_dir
 
 		init_database 
@@ -94,6 +100,8 @@ module Setup
 			E.create_class :has_portfolio, :has_position,  :grid, :has_account, :has_strategy
 			E.create_class  :d2F, :p2U, :my_user
 			HC::GRID.uniq_index
+			HC::D2F.uniq_index
+			HC::MY_USER.uniq_index
 	end
 
 	def self.init_timegraph

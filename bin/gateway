@@ -52,14 +52,10 @@ model_dir =  project_root + '/lib/models'
   ## Here we just subscribe to some events  
 
 	module TG; end
+	module HC; end
 	ActiveOrient::Model.keep_models_without_file =  false
 	ActiveOrient::Model.model_dir = model_dir
 	IB::Setup.connect( tws: tws, orientdb: orientdb, kind: :gateway) do |c|
-		module HC; end
-		ActiveOrient::Init.define_namespace { HC  }
-
-		ActiveOrient::OrientDB.new# model_dir: model_dir
-
 		puts '-'* 83 
 		print '-'* 35
 		print " TWS Connect "

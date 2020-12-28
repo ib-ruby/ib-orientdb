@@ -27,7 +27,6 @@ unzip there, create a link and run `server.sh`
  cd orientdb/bin
  ./server.sh
 
- # ...
 +---------------------------------------------------------------+
 |                WARNING: FIRST RUN CONFIGURATION               |
 +---------------------------------------------------------------+
@@ -70,12 +69,45 @@ systemctl enable  orientdb.service  #  starts the database.server during boot.
 To introduce a new user, just edit `config/orientdb-server-config.xml` and add
 
 ```
- <user resources="*" password="hc" name="hctw"/>
+ <user resources="*" password="*c" name="**"/>
 
 ```
-to  the `<users>` section. Then the User `hctw` has access to anything. 
+to  the `<users>` section. Then the User `**` has access to anything. 
 
 
+
+# Install Ruby gems
+
+After creating your project dir, call
+```
+bundle init
+  => Writing new Gemfile to /home/ubuntu/workspace/project/Gemfile
+```
+Then edit the Gemfile and insert 
+```
+gem  'ib-api'        #, path:  '../ib-api'
+gem  'ib-extensions' #, path:  '../ib-extensions'
+gem  'ib-orientdb'   #, path:  '../ib-orientdb'
+```
+If you cloned the gems, uncomment the path- extensions
+
+Copy the bin directory and connect.yml from ib-orientdb.
+
+```
+cp -r ../ib-orientdb/bin .
+cp ../ib-orientdb/connect.yml .
+```
+After that, run `bundle install`.
+
+(optional) Create model-directories
+```
+mkdir lib/model
+mkdir lib/model/ib    # insert modelfiles for ib-ruby classes
+mkdir lib/model/tg    # insert modelfiles for timegrid classes
+mkdir lib/model/hc    # insert modelfiles for HC-namespaced files
+```
+
+Finally, run `bin/gateway` and check, if all database-classes are assigned.
 
 
 
