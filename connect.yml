@@ -25,17 +25,17 @@
 # host and credentials for the orientdb database
 :orientdb:
   :production:
-   :server: 172.28.50.25
-   :user:  hctw
-   :password: hc 
+   :server: (ip or address)
+   :user:  **
+   :password: ** 
    :database: hc
   :test:
-   :server: 10.222.148.109
-   :user: hctw
-   :password: hc
+   :server: (ip or address)
+   :user: **
+   :password: **
    :database: test
   :development:
-   :server: 10.222.148.109
-   :user: hctw
-   :password: hc
+   :server: (ip ord address)
+   :user: **
+   :password: **
    :database: demo
