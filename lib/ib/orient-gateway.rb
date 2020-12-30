@@ -291,7 +291,7 @@ If called without a parameter, all clients are accessed
 
 
 		def prepare_connection &b
-			self.tws = IB::Connection.new  @connection_parameter, &b
+			self.tws = IB::Connection.new  **@connection_parameter, &b
 			@accounts = @local_orders = Array.new
 			load_managed_accounts if @gateway_parameter[:s_m_a]
 			# prepare Advisor-User hierachy
