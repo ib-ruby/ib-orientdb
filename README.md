@@ -1,6 +1,9 @@
 # IB-OrientDB
 
 ---
+
+__STATUS:  Preparing for a new GEM-Release, scheduled for the first week of July__
+---
 __Documentation: [https://ib-ruby.github.io/ib-doc/](https://ib-ruby.github.io/ib-doc/orientdb_introduction.html)__  
 
 __Questions, Contributions, Remarks: [Discussions are opened in ib-api](https://github.com/ib-ruby/ib-api/discussions)__
