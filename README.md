@@ -2,7 +2,7 @@
 
 ---
 
-__STATUS:  Preparing for a new GEM-Release, scheduled for the first week of July__
+__STATUS:  Preparing for a new GEM-Release, scheduled for July__
 ---
 __Documentation: [https://ib-ruby.github.io/ib-doc/](https://ib-ruby.github.io/ib-doc/orientdb_introduction.html)__  
 
